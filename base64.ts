@@ -32,23 +32,50 @@ function convert({ input, inputBase, outputBase, convertRemainingBits }: {
 }
 
 function getAlphabet(alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/') {
-  if (alphabet.length === 65) {
-    return alphabet;
-  }
+  assert(alphabet.length === 64 || alphabet.length === 65, 'Alphabet must be 64 or 65 characters long');
   if (alphabet.length === 64) {
-    return alphabet + '=';
+    alphabet += '=';
   }
-  throw new Error(`Invalid alphabet ${alphabet}`);
+  assert(new Set(alphabet).size === 65, 'Alphabet must not contain duplicate characters');
+  return alphabet;
+}
+
+/** Options for {@linkcode encode}. */
+export interface EncodeOptions {
+  /**
+   * The alphabet to use.
+   * The alphabet must be a string of 64 unique characters (or 65 unique characters to specify the padding character to use).
+   *
+   * @default {'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='}
+   */
+  alphabet?: string;
+  /**
+   * Whether the encoded string should be padded.
+   *
+   * @default {true}
+   */
+  padding?: boolean;
+}
+
+/** Options for {@linkcode decode}. */
+export interface DecodeOptions {
+  /**
+   * The alphabet to use.
+   * The alphabet must be a string of 64 unique characters (or 65 unique characters to specify the padding character to use).
+   *
+   * @default {'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='}
+   */
+  alphabet?: string;
 }
 
 /**
  * Encodes a Uint8Array buffer into a base64 string.
  *
  * @param buffer The buffer to encode.
- * @param options Optionally specify the alphabet to use and if the encoded string should be padded. The alphabet must be a 64-character string, or 65 characters if specifying the padding character to use.
+ * @param options The options to use for encoding.
  * @returns The base64 encoded string.
  */
-export function encode(buffer: Uint8Array, options?: { alphabet?: string; padding?: boolean }): string {
+export function encode(buffer: Uint8Array, options?: EncodeOptions): string {
   const alphabet = getAlphabet(options?.alphabet);
   const output = convert({ input: buffer, inputBase: 8, outputBase: 6, convertRemainingBits: true });
   if (options?.padding ?? true) {
@@ -63,10 +90,10 @@ export function encode(buffer: Uint8Array, options?: { alphabet?: string; paddin
  * Decodes a base64 encoded string into a Uint8Array buffer.
  *
  * @param string The base64 encoded string.
- * @param options Optionally specify the alphabet to use. The alphabet must be a 64-character string, or 65 characters if specifying the padding character to use.
+ * @param options The options to use for decoding.
  * @returns The decoded buffer.
  */
-export function decode(string: string, options?: { alphabet?: string }): Uint8Array {
+export function decode(string: string, options?: DecodeOptions): Uint8Array {
   const alphabet = getAlphabet(options?.alphabet);
   const map = new Map(Array.from(alphabet).map((character, index) => [character, index]));
   const input = Array.from(string, (character) => require(map.get(character), `Invalid character ${character}`));
