@@ -1,5 +1,7 @@
 import * as base64 from './base64.ts';
 import assert from '@quentinadam/assert';
+import * as hex from '@quentinadam/hex';
+import Uint8ArrayExtension from '@quentinadam/uint8array-extension';
 
 const vectors = [
   { decoded: '', encoded: '' },
@@ -32,42 +34,23 @@ const vectors = [
   },
   {
     // deno-fmt-ignore
-    decoded: new Uint8Array([
-      0x00, 0x10, 0x83, 0x10, 0x51, 0x87, 0x20, 0x92, 0x8b, 0x30, 0xd3, 0x8f, 0x41, 0x14, 0x93, 0x51,
-      0x55, 0x97, 0x61, 0x96, 0x9b, 0x71, 0xd7, 0x9f, 0x82, 0x18, 0xa3, 0x92, 0x59, 0xa7, 0xa2, 0x9a,
-      0xab, 0xb2, 0xdb, 0xaf, 0xc3, 0x1c, 0xb3, 0xd3, 0x5d, 0xb7, 0xe3, 0x9e, 0xbb, 0xf3, 0xdf, 0xbf
-    ]),
+    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf'),
     encoded: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
   },
   {
     // deno-fmt-ignore
-    decoded: new Uint8Array([
-      0x00, 0x10, 0x83, 0x10, 0x51, 0x87, 0x20, 0x92, 0x8b, 0x30, 0xd3, 0x8f, 0x41, 0x14, 0x93, 0x51,
-      0x55, 0x97, 0x61, 0x96, 0x9b, 0x71, 0xd7, 0x9f, 0x82, 0x18, 0xa3, 0x92, 0x59, 0xa7, 0xa2, 0x9a,
-      0xab, 0xb2, 0xdb, 0xaf, 0xc3, 0x1c, 0xb3, 0xd3, 0x5d, 0xb7, 0xe3, 0x9e, 0xbb, 0xf3, 0xdf, 0xbf,
-      0x00
-    ]),
+    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
     encoded: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/AA==',
   },
   {
     // deno-fmt-ignore
-    decoded: new Uint8Array([
-      0x00, 0x10, 0x83, 0x10, 0x51, 0x87, 0x20, 0x92, 0x8b, 0x30, 0xd3, 0x8f, 0x41, 0x14, 0x93, 0x51,
-      0x55, 0x97, 0x61, 0x96, 0x9b, 0x71, 0xd7, 0x9f, 0x82, 0x18, 0xa3, 0x92, 0x59, 0xa7, 0xa2, 0x9a,
-      0xab, 0xb2, 0xdb, 0xaf, 0xc3, 0x1c, 0xb3, 0xd3, 0x5d, 0xb7, 0xe3, 0x9e, 0xbb, 0xf3, 0xdf, 0xbf,
-      0x00
-    ]),
+    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
     alphabet: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A',
     encoded: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ABB==',
   },
   {
     // deno-fmt-ignore
-    decoded: new Uint8Array([
-      0x00, 0x10, 0x83, 0x10, 0x51, 0x87, 0x20, 0x92, 0x8b, 0x30, 0xd3, 0x8f, 0x41, 0x14, 0x93, 0x51,
-      0x55, 0x97, 0x61, 0x96, 0x9b, 0x71, 0xd7, 0x9f, 0x82, 0x18, 0xa3, 0x92, 0x59, 0xa7, 0xa2, 0x9a,
-      0xab, 0xb2, 0xdb, 0xaf, 0xc3, 0x1c, 0xb3, 0xd3, 0x5d, 0xb7, 0xe3, 0x9e, 0xbb, 0xf3, 0xdf, 0xbf,
-      0x00
-    ]),
+    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
     alphabet: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A*',
     encoded: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ABB**',
   },
@@ -77,20 +60,21 @@ Deno.test('encode', () => {
   for (const { decoded, encoded, alphabet, padding } of vectors) {
     const buffer = typeof decoded === 'string' ? new TextEncoder().encode(decoded) : decoded;
     const result = base64.encode(buffer, { alphabet, padding });
-    assert(result === encoded, `Expected ${encoded} but got ${result}`);
+    assert(result === encoded, `Expected ${JSON.stringify(encoded)} but got ${JSON.stringify(result)}`);
   }
 });
 
 Deno.test('decode', () => {
   for (const { decoded, encoded, alphabet } of vectors) {
-    const result = base64.decode(encoded, { alphabet });
     if (typeof decoded === 'string') {
-      assert(new TextDecoder().decode(result) === decoded);
+      const result = new TextDecoder().decode(base64.decode(encoded, { alphabet }));
+      assert(result === decoded, `Expected ${JSON.stringify(decoded)} but got ${JSON.stringify(result)}`);
     } else {
-      assert(result.length === decoded.length);
-      for (let i = 0; i < result.length; i++) {
-        assert(result[i] === decoded[i]);
-      }
+      const result = base64.decode(encoded, { alphabet });
+      assert(
+        new Uint8ArrayExtension(result).equals(decoded),
+        `Expected [${hex.encode(decoded)}] but got [${hex.encode(result)}]`,
+      );
     }
   }
 });

@@ -1,11 +1,13 @@
 {
   "name": "@quentinadam/base64",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "exports": "./base64.ts",
   "imports": {
     "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.7",
-    "@quentinadam/require": "jsr:@quentinadam/require@^0.1.1"
+    "@quentinadam/hex": "jsr:@quentinadam/hex@^0.1.1",
+    "@quentinadam/require": "jsr:@quentinadam/require@^0.1.1",
+    "@quentinadam/uint8array-extension": "jsr:@quentinadam/uint8array-extension@^0.1.4"
   },
   "publish": {
     "exclude": [
