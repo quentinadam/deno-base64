@@ -1,5 +1,5 @@
-import require from '@quentinadam/require';
 import assert from '@quentinadam/assert';
+import require from '@quentinadam/require';
 
 function convert({ input, inputBase, outputBase, convertRemainingBits }: {
   input: Iterable<number>;

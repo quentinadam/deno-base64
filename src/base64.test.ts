@@ -1,7 +1,7 @@
-import * as base64 from '../src/base64.ts';
 import assert from '@quentinadam/assert';
 import * as hex from '@quentinadam/hex';
-import Uint8ArrayExtension from '@quentinadam/uint8array-extension';
+import * as Uint8ArrayExtension from '@quentinadam/uint8array-extension';
+import * as base64 from '../src/base64.ts';
 
 const vectors = [
   { decoded: '', encoded: '' },
@@ -72,7 +72,7 @@ Deno.test('decode', () => {
     } else {
       const result = base64.decode(encoded, { alphabet });
       assert(
-        new Uint8ArrayExtension(result).equals(decoded),
+        Uint8ArrayExtension.equals(result, decoded),
         `Expected [${hex.encode(decoded)}] but got [${hex.encode(result)}]`,
       );
     }
