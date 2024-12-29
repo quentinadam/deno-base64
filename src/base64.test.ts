@@ -1,4 +1,4 @@
-import * as base64 from './base64.ts';
+import * as base64 from '../src/base64.ts';
 import assert from '@quentinadam/assert';
 import * as hex from '@quentinadam/hex';
 import Uint8ArrayExtension from '@quentinadam/uint8array-extension';
