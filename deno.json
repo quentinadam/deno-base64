@@ -3,6 +3,11 @@
   "version": "0.1.4",
   "description": "A simple library to encode and decode base64 strings",
   "license": "MIT",
+  "author": "Quentin Adam",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quentinadam/deno-base64.git"
+  },
   "exports": "./src/base64.ts",
   "imports": {
     "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.10",
