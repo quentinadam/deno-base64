@@ -1,5 +1,5 @@
 import assert from '@quentinadam/assert';
-import require from '@quentinadam/require';
+import ensure from '@quentinadam/ensure';
 
 function convert({ input, inputBase, outputBase, convertRemainingBits }: {
   input: Iterable<number>;
@@ -83,7 +83,7 @@ export function encode(buffer: Uint8Array, options?: EncodeOptions): string {
       output.push(64);
     }
   }
-  return output.map((digit) => require(alphabet[digit])).join('');
+  return output.map((digit) => ensure(alphabet[digit])).join('');
 }
 
 /**
@@ -96,6 +96,6 @@ export function encode(buffer: Uint8Array, options?: EncodeOptions): string {
 export function decode(string: string, options?: DecodeOptions): Uint8Array {
   const alphabet = getAlphabet(options?.alphabet);
   const map = new Map(Array.from(alphabet).map((character, index) => [character, index]));
-  const input = Array.from(string, (character) => require(map.get(character), `Invalid character ${character}`));
+  const input = Array.from(string, (character) => ensure(map.get(character), `Invalid character ${character}`));
   return new Uint8Array(convert({ input, inputBase: 6, outputBase: 8, convertRemainingBits: false }));
 }
