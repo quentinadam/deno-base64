@@ -75,7 +75,7 @@ export interface DecodeOptions {
  * @param options The options to use for encoding.
  * @returns The base64 encoded string.
  */
-export function encode(buffer: Uint8Array, options?: EncodeOptions): string {
+export function encode(buffer: Uint8Array<ArrayBuffer>, options?: EncodeOptions): string {
   const alphabet = getAlphabet(options?.alphabet);
   const output = convert({ input: buffer, inputBase: 8, outputBase: 6, convertRemainingBits: true });
   if (options?.padding ?? true) {
@@ -87,13 +87,13 @@ export function encode(buffer: Uint8Array, options?: EncodeOptions): string {
 }
 
 /**
- * Decodes a base64 encoded string into a Uint8Array buffer.
+ * Decodes a base64 encoded string into a Uint8Array<ArrayBuffer> buffer.
  *
  * @param string The base64 encoded string.
  * @param options The options to use for decoding.
  * @returns The decoded buffer.
  */
-export function decode(string: string, options?: DecodeOptions): Uint8Array {
+export function decode(string: string, options?: DecodeOptions): Uint8Array<ArrayBuffer> {
   const alphabet = getAlphabet(options?.alphabet);
   const map = new Map(Array.from(alphabet).map((character, index) => [character, index]));
   const input = Array.from(string, (character) => ensure(map.get(character), `Invalid character ${character}`));
