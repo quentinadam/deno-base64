@@ -1,6 +1,4 @@
 import assert from '@quentinadam/assert';
-import * as hex from '@quentinadam/hex';
-import * as Uint8ArrayExtension from '@quentinadam/uint8array-extension';
 import * as base64 from '../src/base64.ts';
 
 const vectors = [
@@ -34,23 +32,23 @@ const vectors = [
   },
   {
     // deno-fmt-ignore
-    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf'),
+    decoded: Uint8Array.fromHex('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf'),
     encoded: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
   },
   {
     // deno-fmt-ignore
-    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
+    decoded: Uint8Array.fromHex('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
     encoded: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/AA==',
   },
   {
     // deno-fmt-ignore
-    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
+    decoded: Uint8Array.fromHex('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
     alphabet: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A',
     encoded: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ABB==',
   },
   {
     // deno-fmt-ignore
-    decoded: hex.decode('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
+    decoded: Uint8Array.fromHex('00108310518720928b30d38f41149351559761969b71d79f8218a39259a7a29aabb2dbafc31cb3d35db7e39ebbf3dfbf00'),
     alphabet: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A*',
     encoded: 'BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ABB**',
   },
@@ -72,8 +70,8 @@ Deno.test('decode', () => {
     } else {
       const result = base64.decode(encoded, { alphabet });
       assert(
-        Uint8ArrayExtension.equals(result, decoded),
-        `Expected [${hex.encode(decoded)}] but got [${hex.encode(result)}]`,
+        result.toHex() === decoded.toHex(),
+        `Expected [${decoded.toHex()}] but got [${result.toHex()}]`,
       );
     }
   }

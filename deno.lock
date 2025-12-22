@@ -3,8 +3,6 @@
   "specifiers": {
     "jsr:@quentinadam/assert@~0.1.13": "0.1.13",
     "jsr:@quentinadam/ensure@~0.1.2": "0.1.2",
-    "jsr:@quentinadam/hex@~0.1.5": "0.1.5",
-    "jsr:@quentinadam/uint8array-extension@~0.1.9": "0.1.9",
     "npm:typescript@^5.9.3": "5.9.3"
   },
   "jsr": {
@@ -13,18 +11,6 @@
     },
     "@quentinadam/ensure@0.1.2": {
       "integrity": "dc8428e4af6dd4ad18e71ac934bdf03c644d7379f56c30d4d7928be5675d9858",
-      "dependencies": [
-        "jsr:@quentinadam/assert"
-      ]
-    },
-    "@quentinadam/hex@0.1.5": {
-      "integrity": "27341c94d2c616752d815fd2e8d9d8689b1d7b81abf9b134cb940982373eee9c",
-      "dependencies": [
-        "jsr:@quentinadam/assert"
-      ]
-    },
-    "@quentinadam/uint8array-extension@0.1.9": {
-      "integrity": "4d161d7d63dd04558709e995f7ccfc6154a21efd1a66c2a41b1fb1a80c835d0e",
       "dependencies": [
         "jsr:@quentinadam/assert"
       ]
@@ -40,8 +26,6 @@
     "dependencies": [
       "jsr:@quentinadam/assert@~0.1.13",
       "jsr:@quentinadam/ensure@~0.1.2",
-      "jsr:@quentinadam/hex@~0.1.5",
-      "jsr:@quentinadam/uint8array-extension@~0.1.9",
       "npm:typescript@^5.9.3"
     ]
   }

@@ -1,6 +1,6 @@
 {
   "name": "@quentinadam/base64",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A simple library to encode and decode base64 strings",
   "license": "MIT",
   "author": "Quentin Adam",
@@ -12,8 +12,6 @@
   "imports": {
     "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.13",
     "@quentinadam/ensure": "jsr:@quentinadam/ensure@^0.1.2",
-    "@quentinadam/hex": "jsr:@quentinadam/hex@^0.1.5",
-    "@quentinadam/uint8array-extension": "jsr:@quentinadam/uint8array-extension@^0.1.9",
     "typescript": "npm:typescript@^5.9.3"
   },
   "fmt": {
