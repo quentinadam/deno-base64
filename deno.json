@@ -1,6 +1,6 @@
 {
   "name": "@quentinadam/base64",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A simple library to encode and decode base64 strings",
   "license": "MIT",
   "author": "Quentin Adam",
