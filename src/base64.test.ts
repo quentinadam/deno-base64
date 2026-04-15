@@ -1,5 +1,5 @@
-import assert from '@quentinadam/assert';
-import * as base64 from '../src/base64.ts';
+import { assert } from '@quentinadam/assert';
+import * as base64 from './base64.ts';
 
 const vectors = [
   { decoded: '', encoded: '' },

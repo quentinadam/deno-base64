@@ -1,5 +1,5 @@
-import assert from '@quentinadam/assert';
-import ensure from '@quentinadam/ensure';
+import { assert } from '@quentinadam/assert';
+import { ensure } from '@quentinadam/ensure';
 
 function convert({ input, inputBase, outputBase, convertRemainingBits }: {
   input: Iterable<number>;
